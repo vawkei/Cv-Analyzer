@@ -1,0 +1,78 @@
+.analysis-form-container {
+  width: 100%;
+  max-width: 25rem;
+  margin: 0 auto;
+  .heading {
+    h1 {
+      color: #808797;
+      // text-align: center;
+    }
+    padding: 0.5rem;
+    // border-bottom: 0.5px solid grey;
+  }
+  .body {
+    margin-top: 1rem;
+    padding: 0.5rem;
+
+    .cardClass {
+      padding: 0.5rem;
+
+      h2 {
+        color: #838a9a;
+        margin: 0.5rem 0;
+      }
+
+      .actions {
+        p {
+          text-align: center;
+          padding: 0.25rem;
+        }
+
+        .button {
+          width: 100%;
+        }
+        .button2 {
+          width: 100%;
+          background-color: #f5f6fa;
+          color: #9fa4b0;
+        }
+
+        padding-bottom: 0.75rem;
+        border-bottom: 0.5px solid grey;
+      }
+
+      .lower-part {
+        padding: 0.5rem;
+
+        .control {
+          display: block;
+          width: 100%;
+
+          textarea {
+            font-size: 1rem;
+            padding: 1.5rem;
+            min-height: 100px;
+            min-width: 100%;
+            border-radius: 6px;
+            border: 1px solid #d0d5dd;
+            outline: none;
+
+            // &::placeholder {
+            //   color: #98a2b3;
+            // }
+
+            // &:focus {
+            //   border-color: #38bdf8;
+            //   box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+            // }
+          }
+        }
+
+        .button3 {
+          width: 100%;
+          margin-top: 0.25rem;
+        }
+      }
+    }
+  }
+}
