@@ -47,6 +47,8 @@ const PORT = Number(process.env.PORT) || 5000
 // 👇======This is the startup without a database connected==============👇
 const start = async () => {
   try {
+    await mongoose.connect("mongodb://localhost:27017/CV-ANALYZER");
+    console.log("connected to DB")
     app.listen(PORT,"localhost",()=>{
         console.log(`server listening on port ${PORT}`)
     })
