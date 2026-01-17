@@ -29,6 +29,18 @@
       margin: 0;
       gap: 1rem;
       list-style: none;
+
+      li{
+        // font-size: 24px;
+        cursor: pointer;
+        :hover{
+          color: green;
+        }
+
+        .logOut{
+          background-color: red;
+        }
+      }
     }
   }
 }

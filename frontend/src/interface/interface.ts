@@ -1,5 +1,12 @@
 export interface User{
-    name: string;
+    name?: string;
     email:string;
     password:string
+}
+
+export interface AuthState{
+    isLoggedIn: boolean;
+    isSuccess:boolean;
+    message:string;
+    user:null
 }
