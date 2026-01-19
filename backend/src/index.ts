@@ -8,9 +8,14 @@ import { notFoundMiddleware } from "./middleswares/notFoundMiddleware";
 import { errorHandlerMiddleware } from "./middleswares/errorHandlerMiddleware";
 import authRouter from "./routes/auth-route";
 
+import session from "express-session";
+import connectRedis from "connect-redis";
+import { redisClient } from "./redis/redisClient";
+
 const authRoute = authRouter;
 
 const app = express();
+const RedisStore = connectRedis(session);
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -26,8 +31,22 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 // number 3:
-app.use(express.json());
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: process.env.SESSION_SECRET!,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24, //one day
+    },
+  })
+);
 
+// number 4:
+app.use(express.json());
 
 // routes:
 
@@ -35,28 +54,26 @@ app.get("/", (_req: Request, res: Response) => {
   res.send("<h1>This is the index.ts route...</h1>");
 });
 
-app.use("/api/v1/auth",authRoute);
-
+app.use("/api/v1/auth", authRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const PORT = Number(process.env.PORT) || 5000
-
+const PORT = Number(process.env.PORT) || 5000;
 
 // 👇======This is the startup without a database connected==============👇
 const start = async () => {
   try {
     await mongoose.connect("mongodb://localhost:27017/CV-ANALYZER");
-    console.log("connected to DB")
-    app.listen(PORT,"localhost",()=>{
-        console.log(`server listening on port ${PORT}`)
-    })
+    console.log("connected to DB");
+    app.listen(PORT, "localhost", () => {
+      console.log(`server listening on port ${PORT}`);
+    });
   } catch (error) {
-    const message = 
+    const message =
       error instanceof Error ? error.message : "something went wrong";
-      console.log("startupError:",message)
-  };
+    console.log("startupError:", message);
+  }
 };
 
 start();

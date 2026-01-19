@@ -35,7 +35,7 @@ export const registerController = async (req: Request, res: Response) => {
   }
 
   const salt = await bcrypt.genSalt(12);
-  const hashedPassword =await bcrypt.hash(password, salt);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
   //   const userData = { name: name, email: email, password: hashedPassword };
   const userData = {
@@ -87,24 +87,14 @@ export const loginController = async (req: Request, res: Response) => {
       return res.status(400).json({ msg: "invalid credentials" });
     }
 
-    console.log("about to issue jwt cookie");
-
-    const token = jwt.sign(
-      { userId: user._id, userName: user.name },
-      process.env.JWT_SECRET_V!,
-      { expiresIn: "1d" }
-    );
-
     if (user && isPasswordValid) {
-      const oneDay = 1000 * 60 * 60 * 24;
+      // redis things:
+      req.session.userId = user._id.toString();
+      req.session.userName = user.name;
 
-      res.cookie("token", token, {
-        path: "/",
-        httpOnly: true,
-        expires: new Date(Date.now() + oneDay),
-        // secure:true,
-        // sameSite:"none"
-      });
+      console.log("reqSession:", req.session);
+      console.log("reqSessionUserId:", req.session.userId);
+      console.log("reqSessionUserName:", req.session.userName);
 
       console.log("loggedIn successfully");
       res.status(200).json({ msg: "loggedin successfully", user: user });
@@ -123,16 +113,11 @@ export const logoutController = (req: Request, res: Response) => {
   console.log("This is the logout route");
 
   try {
-    res.cookie("token", "", {
-      path: "/",
-      httpOnly: true,
-      expires: new Date(0),
-      // secure:true,
-      // sameSite:"none"
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
+      console.log("user loggedout successfully");
+      res.status(200).json({ msg: "user loggedout successfully" });
     });
-
-    console.log("user loggedout successfully");
-    res.status(200).json({ msg: "user loggedout successfully" });
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "something went wrong";
