@@ -7,8 +7,10 @@ import cookieParser = require("cookie-parser");
 import { notFoundMiddleware } from "./middleswares/notFoundMiddleware";
 import { errorHandlerMiddleware } from "./middleswares/errorHandlerMiddleware";
 import authRouter from "./routes/auth-route";
+import analyzeRouter from "./routes/analyze-route";
 
 const authRoute = authRouter;
+const analyzeRoute = analyzeRouter;
 
 const app = express();
 
@@ -36,6 +38,7 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 app.use("/api/v1/auth",authRoute);
+app.use("/api/v1/analyze",analyzeRoute)
 
 
 app.use(notFoundMiddleware);

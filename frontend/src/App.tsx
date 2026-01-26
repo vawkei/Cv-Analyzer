@@ -5,6 +5,7 @@ import ErrorPage from "./pages/ErrorPage";
 import AuthPage from "./pages/AuthPage";
 import AnalysisFormPage from "./pages/AnalysisFormPage";
 import { ProtectedRoute } from "./components/auth/Protected";
+import AnalysisResultPage from "./pages/AnalysisResultPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +24,14 @@ function App() {
             </ProtectedRoute>
           ),
         },
+        {
+          path:"/analysis-result",
+          element:(
+            <ProtectedRoute>
+              <AnalysisResultPage />
+            </ProtectedRoute>
+          )
+        }
       ],
     },
   ]);

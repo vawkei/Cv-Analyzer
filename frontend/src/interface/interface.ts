@@ -9,4 +9,10 @@ export interface AuthState{
     isSuccess:boolean;
     message:string;
     user:null
+};
+
+export interface AnalyzeCvProps{
+    jobDescription:string
+    cvText:string
+    cvFile:File | null
 }
