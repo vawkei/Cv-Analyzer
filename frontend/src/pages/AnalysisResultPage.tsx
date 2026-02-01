@@ -1,4 +1,4 @@
-import AnalysisResult from "./AnalysisResult";
+import AnalysisResult from "../components/analysis/AnalysisResult";
 
 const AnalysisResultPage = () => {
     return ( 

@@ -16,3 +16,14 @@ export interface AnalyzeCvProps{
     cvText:string
     cvFile:File | null
 }
+
+export interface CvAnalysisResult{
+    result:{        
+            fitScore:number,
+            gaps:string[],
+            skills:string[],
+            strengths:string[],
+            summary:string
+    };
+    msg:string;
+}

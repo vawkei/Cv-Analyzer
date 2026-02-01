@@ -3,14 +3,14 @@ import Button from "../ui/button/Button";
 import Card from "../ui/card/Card";
 import classes from "./AnalysisForm.module.scss";
 import { useAnalyzeCv } from "../../features/analyze/useAnalyzeCv";
-import type { AnalyzeCvProps } from "../../interface/interface";
-import { useDispatch } from "react-redux";
-import type { AddDispatch } from "../../store/store";
-import { SET_CV_DATA_RESPONSE } from "../../store/analyzeStore/analyzeIndex";
+// import { useDispatch } from "react-redux";
+// import type { AddDispatch } from "../../store/store";
+// import { SET_CV_DATA_RESPONSE } from "../../store/analyzeStore/analyzeIndex";
 import { useNavigate } from "react-router-dom";
 
+
 const AnalysisForm = () => {
-  const { mutateAsync: analyzeData } = useAnalyzeCv();
+  const { mutateAsync: analyzeData, isPending } = useAnalyzeCv();
 
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [showPasteCv, setShowPasteCv] = useState(false);
@@ -42,7 +42,7 @@ const AnalysisForm = () => {
     setShowPasteCv((curr) => !curr);
   };
 
-  const dispatch = useDispatch<AddDispatch>();
+  // const dispatch = useDispatch<AddDispatch>();
 
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,10 +62,11 @@ const AnalysisForm = () => {
     console.log("FormData ready:", formData);
 
     try {
+      
       await analyzeData(formData, {
         onSuccess: (data) => {
           if (data.msg === "analysis successful") {
-            dispatch(SET_CV_DATA_RESPONSE(data));
+            // dispatch(SET_CV_DATA_RESPONSE(data));
             navigate("/analysis-result");
           }
         },
@@ -86,6 +87,7 @@ const AnalysisForm = () => {
       <div className={classes.body}>
         <form action="" onSubmit={onSubmitHandler}>
           <Card className={classes.cardClass}>
+            {isPending && <p>Analyzing...</p>}
             <h2>Upload CV</h2>
 
             <div className={classes.actions}>
