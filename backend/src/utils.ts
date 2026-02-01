@@ -61,5 +61,13 @@ export const extractPdfText = async (buffer: Buffer) => {
   const uint8Array = new Uint8Array(buffer);
   
   const { text } = await extractText(uint8Array);
-  return text;
+  // return text;
+
+   // Join pages into a single string
+  return text.join("\n");
 };
+
+
+
+
+

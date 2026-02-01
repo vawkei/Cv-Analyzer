@@ -3,11 +3,8 @@ import Button from "../ui/button/Button";
 import Card from "../ui/card/Card";
 import classes from "./AnalysisForm.module.scss";
 import { useAnalyzeCv } from "../../features/analyze/useAnalyzeCv";
-// import { useDispatch } from "react-redux";
-// import type { AddDispatch } from "../../store/store";
-// import { SET_CV_DATA_RESPONSE } from "../../store/analyzeStore/analyzeIndex";
 import { useNavigate } from "react-router-dom";
-
+import { IoCheckmarkDoneOutline } from "react-icons/io5";
 
 const AnalysisForm = () => {
   const { mutateAsync: analyzeData, isPending } = useAnalyzeCv();
@@ -15,8 +12,7 @@ const AnalysisForm = () => {
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [showPasteCv, setShowPasteCv] = useState(false);
   const [cvText, setCvText] = useState("");
-  const [showPdf, setShowPdf] = useState(false);
-  const [pdfPreview, setPdfPreview] = useState("");
+  const [showPdfButton, setShowPdfButton] = useState(true);
   const [jobDescription, setJobDescription] = useState("");
 
   const navigate = useNavigate();
@@ -24,11 +20,13 @@ const AnalysisForm = () => {
   const fileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setCvFile(e.target.files[0]);
+      setShowPdfButton(false);
     }
   };
 
   const cvTextChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCvText(e.target.value);
+    setShowPdfButton(false);
   };
 
   // For the job description textarea
@@ -47,22 +45,30 @@ const AnalysisForm = () => {
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!cvFile || cvText) {
+    if (!cvFile && !cvText) {
       return console.log("please supply a cv");
-    }
+      // Reject only if BOTH are missing
+    };
+    
     if (!jobDescription) {
       return console.log("please enter job description");
-    }
+    };
 
     const formData = new FormData();
-    formData.append("cvFile", cvFile);
-    formData.append("cvText", cvText);
+
+    if (cvFile) {
+      formData.append("cvFile", cvFile);
+    };
+
+    if (cvText) {
+      formData.append("cvText", cvText);
+    };
+
     formData.append("jobDescription", jobDescription);
 
     console.log("FormData ready:", formData);
 
     try {
-      
       await analyzeData(formData, {
         onSuccess: (data) => {
           if (data.msg === "analysis successful") {
@@ -88,41 +94,54 @@ const AnalysisForm = () => {
         <form action="" onSubmit={onSubmitHandler}>
           <Card className={classes.cardClass}>
             {isPending && <p>Analyzing...</p>}
+
             <h2>Upload CV</h2>
 
             <div className={classes.actions}>
-              <label className={classes.uploadButton}>
-                Upload PDF or Text Files
-                <input
-                  type="file"
-                  accept=".pdf,.txt"
-                  onChange={fileChangeHandler}
-                  hidden
-                />
-              </label>
-              <div className={classes["pdf-preview"]}>{pdfPreview ? <p>Pdf loaded</p> : ""}</div>
+              {showPdfButton ? (
+                <>
+                  <label className={classes.uploadButton}>
+                    Upload PDF or Text Files
+                    <input
+                      type="file"
+                      accept=".pdf,.txt"
+                      onChange={fileChangeHandler}
+                      hidden
+                    />
+                  </label>
 
-              <div>
-                <p>OR</p>
-              </div>
+                  <div>
+                    <p>OR</p>
+                  </div>
 
-              <div className={classes["mid-part"]}>
-                <button
-                  type="button"
-                  className={classes.secondaryButton}
-                  onClick={() => setShowPasteCvToggleHandler()}
-                >
-                  Paste CV Text
-                </button>
+                  <div className={classes["mid-part"]}>
+                    <button
+                      type="button"
+                      className={classes.secondaryButton}
+                      onClick={() => setShowPasteCvToggleHandler()}
+                    >
+                      Paste CV Text
+                    </button>
 
-                {showPasteCv && (
-                  <textarea
-                    placeholder="Paste CV text here..."
-                    value={cvText}
-                    onChange={cvTextChangeHandler}
-                  />
-                )}
-              </div>
+                    {showPasteCv && (
+                      <textarea
+                        placeholder="Paste CV text here..."
+                        value={cvText}
+                        onChange={cvTextChangeHandler}
+                      />
+                    )}
+                  </div>
+                </>
+              ) : (
+                <div className={classes["file-selected"]}>
+                  <p style={{ color: "green", fontSize: "24px" }}>
+                    file selected
+                  </p>
+                  <div>
+                    <IoCheckmarkDoneOutline size={18} color={"green"} />
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className={classes["lower-part"]}>

@@ -13,6 +13,7 @@ export const registerController = async (req: Request, res: Response) => {
     console.log("input fields shouldn't be empty");
     return res.status(400).json({ msg: "input fields shouldn't be empty" });
   }
+  // Why this works because ALL of these fields are REQUIRED.
 
   try {
     const emailExists = await User.findOne({ email: email });

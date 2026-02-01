@@ -50,13 +50,13 @@ const AnalysisResult = () => {
                 ? classes.red
                 : data.result.fitScore <= 70
                   ? classes.orange
-                  : classes.yellow
+                  : classes.white
             }
           >
       {/* 📒📒Meaning:📒📒
           < 50 → red
             50–70 → orange
-            71+ → yellow */}
+            71+ → white */}
             {data.result.fitScore}
           </p>
         </div>

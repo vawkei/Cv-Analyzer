@@ -6,23 +6,32 @@ export const analyzeController = async (req: Request, res: Response) => {
   const { cvText, jobDescription } = req.body;
 
   const cvFile = req.file;
+  console.log("cvFile:", cvFile, "jobDesc:", jobDescription, "cvText:",cvText);
 
-  console.log("cvFile:", cvFile, "jobDesc:", jobDescription, "cvText:", cvText);
-
-  if (!cvFile) {
-    return res.status(400).json({ msg: "CV file is required" });
-  }
+  if (!cvFile && !cvText) {
+    return res.status(400).json({ msg: "Cv file or Cv text is required" });
+  };
 
   if (!jobDescription) {
     return res.status(400).json({ msg: "missing job description" });
-  }
+  };
+
+  
 
   console.log("about to start the prompt");
 
   try {
-    const convertedText = await extractPdfText(cvFile.buffer);
+    // const convertedText = await extractPdfText(cvFile.buffer);
 
-    console.log("convertedText:", convertedText);
+    // console.log("convertedText:", convertedText);
+
+    let nomalizeCvText = "";
+
+  if(cvFile){
+    nomalizeCvText = await extractPdfText(cvFile.buffer);
+  }else{
+    nomalizeCvText = cvText;
+  }
 
     const prompt = `
             Analyze the candidate CV against the job description.
@@ -36,7 +45,8 @@ export const analyzeController = async (req: Request, res: Response) => {
             - summary (short paragraph)
 
             CV Content:
-            ${convertedText}
+            
+            ${nomalizeCvText}
 
             Job Description:
             ${jobDescription}

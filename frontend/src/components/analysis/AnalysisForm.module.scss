@@ -28,6 +28,12 @@
           padding: 0.25rem;
         }
 
+         .file-selected{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
         .uploadButton {
           display: flex;
           align-items: center;
@@ -56,12 +62,13 @@
           min-height: 100px;
           min-width: 100%;
         }
+       
         }
 
         .button {
           width: 100%;
         }
-        text-area {
+        textarea {
           font-size: 1rem;
           padding: 1.5rem;
           min-height: 100px;
