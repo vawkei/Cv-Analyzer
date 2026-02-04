@@ -1,7 +1,9 @@
 .container {
   width: 100%;
+  min-width: 50rem;
   display: flex;
   flex-direction: column;
+  margin-top: 7rem;
 
   .action {
     display: flex;
@@ -24,13 +26,13 @@
     // color: yellow;
     font-size: 28px;
 
-    .red{
+    .red {
       color: red;
     }
-    .orange{
+    .orange {
       color: orange;
     }
-    .yellow{
+    .yellow {
       color: white;
     }
   }
@@ -46,6 +48,7 @@
         ul {
           // list-style: none;
           padding: 0.5rem;
+          font-size: 18px;
         }
       }
     }
@@ -98,6 +101,56 @@
               line-height: 2rem;
             }
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    width: 100%;
+    margin-top: -3rem;
+    max-width: 22rem;
+
+    .action {
+      margin-left: 1rem;
+    }
+
+    .top {
+      width: 90%;
+      max-width: 22rem;
+      margin-left: 1rem;
+    }
+
+    .body {
+      display: flex;
+      flex-direction: column;
+      margin-left: 1rem;
+
+      .strength-and-gaps {
+        .cardClass {
+          max-width: 22rem;
+          font-size: 18px;
+        }
+      }
+
+      .right-hand-side {
+        .skill {
+          .cardClass2 {
+            max-width: 22rem;
+          }
+        }
+
+        .gaps {
+          .cardClass3 {
+            max-width: 22rem;
+          }
+        }
+      }
+      .summary {
+        .cardClass4 {
+          max-width: 22rem;
         }
       }
     }

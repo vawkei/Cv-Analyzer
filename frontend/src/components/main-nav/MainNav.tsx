@@ -1,7 +1,8 @@
 import classes from "./MainNav.module.scss";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ShowWhenLoggedIn, ShowWhenLoggedOut } from "../auth/Protected";
 import { useLogout } from "../../features/auth/useLogout";
+import { useEffect, useState } from "react";
 // import {
 //   RESET_USER,
 //   SET_LOGGEDOUT_USER,
@@ -11,12 +12,36 @@ import { useLogout } from "../../features/auth/useLogout";
 
 const MainNav = () => {
   const { mutateAsync: logoutUser } = useLogout();
+  const [showMenu, setShowMenu] = useState(false);
 
   // const navigate = useNavigate();
   // const dispatch = useDispatch<AddDispatch>();
 
   const navDataHandler = (navData: any) => {
     return navData.isActive ? classes.active : "";
+  };
+
+  const showToggleHandler = () => {
+    setShowMenu((currState) => !currState);
+  };
+
+
+  // This is forwhen d mobile menu opens, user can’t scroll the page behind it:
+useEffect(() => {
+  if (showMenu) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [showMenu]);
+
+
+  const setShowMenuToFalse = () => {
+    setShowMenu(false);
   };
 
   // const logoutHandler = async () => {
@@ -39,8 +64,21 @@ const MainNav = () => {
           <span>AI Talent Profile</span> Analyzer
         </NavLink>
       </h1>
-      <nav>
-        <ul>
+      <nav
+        className={
+          showMenu
+            ? `${classes["show-navigation"]}`
+            : `${classes["hide-navigation"]}`
+        }
+      >
+        <div
+          className={
+            showMenu
+              ? `${classes["nav-backdrop"]} ${classes["show-nav-backdrop"]}`
+              : `${classes["nav-backdrop"]}`
+          }
+        ></div>
+        <ul onClick={showToggleHandler}>
           <ShowWhenLoggedOut>
             <li>
               <NavLink to={"/auth"} className={navDataHandler}>
@@ -60,7 +98,7 @@ const MainNav = () => {
           <ShowWhenLoggedIn>
             <li
               // onClick={logoutHandler}
-              onClick={()=>logoutUser()}
+              onClick={() => logoutUser()}
               className={classes.logOut}
             >
               Logout
@@ -68,6 +106,10 @@ const MainNav = () => {
           </ShowWhenLoggedIn>
         </ul>
       </nav>
+
+      <div className={classes.harmburger} onClick={showToggleHandler}>
+           {showMenu ? "X" : "☰"}
+      </div>
     </header>
   );
 };

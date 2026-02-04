@@ -5,6 +5,7 @@ import classes from "./AnalysisForm.module.scss";
 import { useAnalyzeCv } from "../../features/analyze/useAnalyzeCv";
 import { useNavigate } from "react-router-dom";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
+import Loader from "../ui/loader/Loader";
 
 const AnalysisForm = () => {
   const { mutateAsync: analyzeData, isPending } = useAnalyzeCv();
@@ -48,21 +49,21 @@ const AnalysisForm = () => {
     if (!cvFile && !cvText) {
       return console.log("please supply a cv");
       // Reject only if BOTH are missing
-    };
-    
+    }
+
     if (!jobDescription) {
       return console.log("please enter job description");
-    };
+    }
 
     const formData = new FormData();
 
     if (cvFile) {
       formData.append("cvFile", cvFile);
-    };
+    }
 
     if (cvText) {
       formData.append("cvText", cvText);
-    };
+    }
 
     formData.append("jobDescription", jobDescription);
 
@@ -93,8 +94,8 @@ const AnalysisForm = () => {
       <div className={classes.body}>
         <form action="" onSubmit={onSubmitHandler}>
           <Card className={classes.cardClass}>
-            {isPending && <p>Analyzing...</p>}
-
+            {/* {isPending && <p>Analyzing...</p>} */}
+            {isPending && <Loader />}
             <h2>Upload CV</h2>
 
             <div className={classes.actions}>

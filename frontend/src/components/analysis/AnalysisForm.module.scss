@@ -1,6 +1,7 @@
 .analysis-form-container {
   width: 100%;
   max-width: 25rem;
+  min-width: 20rem;
   margin: 0 auto;
   .heading {
     h1 {
@@ -28,7 +29,7 @@
           padding: 0.25rem;
         }
 
-         .file-selected{
+        .file-selected {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -55,14 +56,13 @@
           }
         }
 
-        .mid-part{
-            textarea {
-          font-size: 1rem;
-          padding: 1.5rem;
-          min-height: 100px;
-          min-width: 100%;
-        }
-       
+        .mid-part {
+          textarea {
+            font-size: 1rem;
+            padding: 1.5rem;
+            min-height: 100px;
+            min-width: 100%;
+          }
         }
 
         .button {
@@ -133,5 +133,13 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .analysis-form-container {
+    width: 100%;
+    max-width: 20rem;
+    margin: -2rem auto;
   }
 }
