@@ -9,6 +9,8 @@ import type { AddDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { SET_LOGGEDIN_USER } from "../../store/authStore/authIndex";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Loader from "../ui/loader/Loader";
 
 const AuthForm = () => {
   const { mutateAsync: registerUser, isPending } = useRegister();
@@ -42,6 +44,7 @@ const AuthForm = () => {
         enteredEmail.trim().length === 0 ||
         enteredPassword.trim().length < 6
       ) {
+        toast.error("Fill out the inputs");
         return console.log("Fill out the inputs");
       }
       const userData = {
@@ -57,17 +60,26 @@ const AuthForm = () => {
             navigate("/analysis-form");
           }
         },
+        onError: (error) => {
+          const message =
+            error instanceof Error ? error.message : "loggin failed";
+          console.log("loggin error:", message);
+          toast.error(message);
+        },
       });
     } else {
       //👇👇 =================Register=============================👇👇
 
       if (enteredName.trim().length < 3) {
+        toast.error("name should be at least 3 characters long");
         return console.log("name should be at least 3 characters long");
       }
       if (enteredEmail.trim().length === 0) {
+        toast.error("please enter valid email address")
         return console.log("please enter valid email address");
       }
       if (enteredPassword.trim().length < 6) {
+        toast.error("password must be at least 6 characters long")
         return console.log("password must be at least 6 characters long");
       }
 
@@ -77,6 +89,12 @@ const AuthForm = () => {
           if (data.msg === "new user registered") {
             setHaveAccount(true);
           }
+        },
+        onError: (error) => {
+          const message =
+            error instanceof Error ? error.message : "loggin failed";
+          console.log("loggin error:", message);
+          toast.error(message);
         },
       });
 
@@ -89,6 +107,9 @@ const AuthForm = () => {
       <form action="" onSubmit={onSubmitHandler}>
         <Card className={classes.cardClass}>
           {isPending && <p style={{ color: "green" }}>Loading...</p>}
+          <div className={classes.loader}>
+              {isPending && <Loader />}
+          </div>
           <div className={classes["form-intro"]}>
             <h2>{haveAccount ? "Login" : "Register"}</h2>
           </div>

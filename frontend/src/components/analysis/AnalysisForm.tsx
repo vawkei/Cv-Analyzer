@@ -6,6 +6,7 @@ import { useAnalyzeCv } from "../../features/analyze/useAnalyzeCv";
 import { useNavigate } from "react-router-dom";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import Loader from "../ui/loader/Loader";
+import { toast } from "react-toastify";
 
 const AnalysisForm = () => {
   const { mutateAsync: analyzeData, isPending } = useAnalyzeCv();
@@ -76,6 +77,12 @@ const AnalysisForm = () => {
             // dispatch(SET_CV_DATA_RESPONSE(data));
             navigate("/analysis-result");
           }
+        },
+        onError: (error) => {
+          const message =
+            error instanceof Error ? error.message : "request failed";
+          console.log("request error:", message);
+          toast.error(message);
         },
       });
     } catch (error) {

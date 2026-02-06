@@ -9,12 +9,14 @@ export const register = async (userData: any) => {
       credentials: "include",
     });
 
-    if (!response.ok) {
-      throw new Error("Request failed");
-    }
 
     const data = await response.json();
     console.log("data:", data);
+    
+    if (!response.ok) {
+      throw new Error(data.msg || "Request failed");
+    };
+
     return data;
   } catch (error) {
     const message =
@@ -30,7 +32,27 @@ export const login = async (userData: any) => {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-Type": "application/json" },
-      credentials:"include"
+      credentials: "include",
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.msg || "Login failed");
+    }
+    console.log("data:", data);
+    return data;
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "something went wrong";
+    console.log("loginError:", message);
+    throw error;
+  }
+};
+
+export const logout = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/logout`, {
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -43,26 +65,6 @@ export const login = async (userData: any) => {
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "something went wrong";
-    console.log("loginError:", message);
-    throw error;
+    console.log("logoutError:", message);
   }
 };
-
-export const logout =async ()=>{
-  try{
-    const response = await fetch(`${BASE_URL}/logout`,{
-    credentials:"include"
-  });
-  
-  if(!response.ok){
-    throw new Error("Request failed")
-  };
-
-  const data =await response.json();
-  console.log("data:",data);
-  return data
-  }catch(error){
-    const message = error instanceof Error?error.message:"something went wrong";
-    console.log("logoutError:",message)
-  }
-}
