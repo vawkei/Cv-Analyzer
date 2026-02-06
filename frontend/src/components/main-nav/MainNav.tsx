@@ -40,10 +40,6 @@ useEffect(() => {
 }, [showMenu]);
 
 
-  const setShowMenuToFalse = () => {
-    setShowMenu(false);
-  };
-
   // const logoutHandler = async () => {
   //   await logoutUser(undefined, {
   //     onSuccess: (data) => {
