@@ -16,7 +16,7 @@ const analyzeRoute = analyzeRouter;
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000","https://cv-analyzer-nc73.onrender.com"],
   credentials: true,
   methods: ["GET", "POST", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization", "my-custom-header"],
