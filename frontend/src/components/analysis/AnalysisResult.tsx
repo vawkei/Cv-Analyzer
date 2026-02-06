@@ -4,6 +4,7 @@ import type { CvAnalysisResult } from "../../interface/interface";
 import Card from "../ui/card/Card";
 import Button from "../ui/button/Button";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const AnalysisResult = () => {
   
@@ -22,6 +23,11 @@ const AnalysisResult = () => {
     return <p>No analysis Found</p>;
   }
 
+
+  useEffect(()=>{
+    document.body.style.overflow = "unset";
+    document.body.style.overflow = "static"
+  },[]);
   
 
   //turning the object into an array:

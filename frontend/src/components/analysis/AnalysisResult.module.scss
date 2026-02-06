@@ -3,7 +3,10 @@
   min-width: 20rem;
   display: flex;
   flex-direction: column;
-  margin-top: 7rem;
+  // margin-top: 7rem;
+  padding-top: 3rem;       // use padding instead of margin-top
+
+
 
   .action {
     display: flex;
