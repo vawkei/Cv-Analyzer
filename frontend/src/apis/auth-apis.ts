@@ -1,8 +1,9 @@
-const BASE_URL = "http://localhost:5000/api/v1/auth";
+// const BASE_URL = "http://localhost:5000/api/v1/auth";
+const BACKEND_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth`;
 
 export const register = async (userData: any) => {
   try {
-    const response = await fetch(`${BASE_URL}/register`, {
+    const response = await fetch(`${BACKEND_URL}/register`, {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-Type": "application/json" },
@@ -28,7 +29,7 @@ export const register = async (userData: any) => {
 
 export const login = async (userData: any) => {
   try {
-    const response = await fetch(`${BASE_URL}/login`, {
+    const response = await fetch(`${BACKEND_URL}/login`, {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-Type": "application/json" },
@@ -51,7 +52,7 @@ export const login = async (userData: any) => {
 
 export const logout = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/logout`, {
+    const response = await fetch(`${BACKEND_URL}/logout`, {
       credentials: "include",
     });
 

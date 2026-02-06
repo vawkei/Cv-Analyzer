@@ -1,6 +1,7 @@
 // import type { AnalyzeCvProps } from "../interface/interface";
 
-const BASE_URL = "http://localhost:5000/api/v1/analyze";
+
+const BACKEND_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/analyze`;
 
 export const analyze = async (formData: FormData) => {
   // const formData = new FormData();
@@ -14,7 +15,7 @@ export const analyze = async (formData: FormData) => {
 
   try {
     console.log("starting request...");
-    const response = await fetch(`${BASE_URL}/analyze-route`, {
+    const response = await fetch(`${BACKEND_URL}/analyze-route`, {
       method: "POST",
       body: formData,
       // headers:{"Content-Type":"multipart/form-data"},
