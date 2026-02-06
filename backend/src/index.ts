@@ -74,7 +74,7 @@ const start = async () => {
     // await mongoose.connect("mongodb://localhost:27017/CV-ANALYZER");
     await mongoose.connect(URL)
     console.log("connected to mongoDB Atlas")
-    app.listen(PORT,"localhost",()=>{
+      app.listen(PORT, "0.0.0.0", () => {
         console.log(`server listening on port ${PORT}`)
     })
   } catch (error) {
