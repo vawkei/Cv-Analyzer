@@ -6,6 +6,9 @@ import Button from "../ui/button/Button";
 import { useNavigate } from "react-router-dom";
 
 const AnalysisResult = () => {
+  
+  const navigate = useNavigate();
+  
   const { data } = useQuery<CvAnalysisResult>({
     queryKey: ["cvAnalysis"],
     queryFn: async () => {
@@ -19,7 +22,7 @@ const AnalysisResult = () => {
     return <p>No analysis Found</p>;
   }
 
-  const navigate = useNavigate();
+  
 
   //turning the object into an array:
   //   const arrTotalAmountMadePerProduct = Object.keys(
