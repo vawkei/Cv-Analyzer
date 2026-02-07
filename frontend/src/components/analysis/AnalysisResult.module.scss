@@ -4,9 +4,7 @@
   display: flex;
   flex-direction: column;
   // margin-top: 7rem;
-  padding-top: 3rem;       // use padding instead of margin-top
-
-
+  padding-top: 3rem; // use padding instead of margin-top
 
   .action {
     display: flex;
@@ -41,17 +39,31 @@
   }
   .body {
     display: flex;
+    align-items: stretch;
+    min-height: 100vh;
     gap: 1rem;
     margin-top: 1rem;
 
-    .strength-and-gaps {
-      .cardClass .ul-div {
-        padding: 0.5rem;
+    .left-hand-side {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 1rem;
 
-        ul {
-          // list-style: none;
+      // flex: 1;
+      //  height: 100vh;
+      .cardClass {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        .ul-div {
           padding: 0.5rem;
-          font-size: 18px;
+          width: 100%;
+
+          ul {
+            // list-style: none;
+            padding: 0.5rem;
+            font-size: 18px;
+          }
         }
       }
     }
@@ -59,6 +71,9 @@
     .right-hand-side {
       display: flex;
       flex-direction: column;
+      padding: 1rem 1rem;
+      // flex: 1;
+      // height: 100vh;
 
       .skill {
         .cardClass2 .ul-div {
@@ -94,6 +109,9 @@
       }
       .summary {
         margin-top: 1rem;
+        // margin-top: auto; this will pin the summary card to the bottom
+        display: flex;
+        flex-grow: 1;
         .cardClass4 {
           padding: 0.5rem;
 
@@ -131,7 +149,7 @@
       flex-direction: column;
       margin-left: 1rem;
 
-      .strength-and-gaps {
+      .left-hand-side {
         .cardClass {
           max-width: 22rem;
           font-size: 18px;
@@ -159,3 +177,35 @@
     }
   }
 }
+
+// .body {
+//     display: flex;
+//     align-items: stretch;
+//     min-height: 100vh;
+//     gap: 1rem;
+//     margin-top: 1rem;
+
+//     .left-hand-side {
+//       display: flex;
+//       flex-direction: column;
+//       padding: 1rem 1rem;
+//       // flex: 1;
+//       //  height: 100vh;
+//       .cardClass .ul-div {
+//         padding: 0.5rem;
+//         width: 100%;
+
+//         ul {
+//           // list-style: none;
+//           padding: 0.5rem;
+//           font-size: 18px;
+//         }
+//       }
+//     }
+
+//     .right-hand-side {
+//       display: flex;
+//       flex-direction: column;
+//       padding: 1rem 1rem;
+//       // flex: 1;
+//       // height: 100vh;

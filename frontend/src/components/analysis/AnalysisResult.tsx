@@ -71,11 +71,9 @@ const AnalysisResult = () => {
         </div>
       </div>
       <div className={classes.body}>
-        <div className={classes["left-hand-side"]}>
-          <div className={classes["strength-and-gaps"]}>
+        <Card className={classes["left-hand-side"]}>
             <Card className={classes.cardClass}>
               <h2>Strengths</h2>
-
               <div className={classes["ul-div"]}>
                 {data.result.strengths.map((data: string, index: number) => {
                   return (
@@ -86,10 +84,9 @@ const AnalysisResult = () => {
                 })}
               </div>
             </Card>
-          </div>
-        </div>
+        </Card>
 
-        <div className={classes["right-hand-side"]}>
+        <Card className={classes["right-hand-side"]}>
           <div className={classes.skill}>
             <Card className={classes.cardClass2}>
               <h2>Skills</h2>
@@ -129,7 +126,7 @@ const AnalysisResult = () => {
               </div>
             </Card>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );
