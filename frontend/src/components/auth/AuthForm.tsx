@@ -13,8 +13,8 @@ import { toast } from "react-toastify";
 import Loader from "../ui/loader/Loader";
 
 const AuthForm = () => {
-  const { mutateAsync: registerUser, isPending } = useRegister();
-  const { mutateAsync: loginUser } = useLogin();
+  const { mutateAsync: registerUser, isPending:isRegistering } = useRegister();
+  const { mutateAsync: loginUser,isPending:isLoggingIn } = useLogin();
 
   const [enteredName, setEnteredName] = useState<string>("");
   const [enteredEmail, setEnteredEmail] = useState<string>("");
@@ -106,9 +106,9 @@ const AuthForm = () => {
     <div className={classes["auth-form-container"]}>
       <form action="" onSubmit={onSubmitHandler}>
         <Card className={classes.cardClass}>
-          {isPending && <p style={{ color: "green" }}>Loading...</p>}
+          {isRegistering||isLoggingIn && <p style={{ color: "green" }}>Loading...</p>}
           <div className={classes.loader}>
-              {isPending && <Loader />}
+              {isRegistering||isLoggingIn && <Loader />}
           </div>
           <div className={classes["form-intro"]}>
             <h2>{haveAccount ? "Login" : "Register"}</h2>

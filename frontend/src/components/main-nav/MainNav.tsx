@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { ShowWhenLoggedIn, ShowWhenLoggedOut } from "../auth/Protected";
 import { useLogout } from "../../features/auth/useLogout";
 import { useEffect, useState } from "react";
+import Loader from "../ui/loader/Loader";
 // import {
 //   RESET_USER,
 //   SET_LOGGEDOUT_USER,
@@ -11,7 +12,7 @@ import { useEffect, useState } from "react";
 // import type { AddDispatch } from "../../store/store";
 
 const MainNav = () => {
-  const { mutateAsync: logoutUser } = useLogout();
+  const { mutateAsync: logoutUser,isPending } = useLogout();
   const [showMenu, setShowMenu] = useState(false);
 
   // const navigate = useNavigate();
@@ -55,6 +56,7 @@ useEffect(() => {
 
   return (
     <header className={classes.header}>
+      {isPending && <Loader />}
       <h1>
         <NavLink to={"/"} className={navDataHandler}>
           <span>AI Talent Profile</span> Analyzer
